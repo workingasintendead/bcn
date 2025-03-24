@@ -1,16 +1,15 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import Landing from './page';
-import '@testing-library/jest-dom';
+import Navbar from './Navbar';
 
-describe('Landing Page', () => {
+describe('Navbar Component', () => {
   it('renders the logo image', () => {
-    render(<Landing />);
+    render(<Navbar />);
     const logo = screen.getByAltText('BCN Logo');
     expect(logo).toBeInTheDocument();
   });
 
   it('applies hover effect to logo', () => {
-    render(<Landing />);
+    render(<Navbar />);
 
     const logo = screen.getByAltText('BCN Logo');
 
@@ -19,5 +18,15 @@ describe('Landing Page', () => {
     fireEvent.mouseOver(logo);
 
     expect(logo).toHaveClass('hover:opacity-70');
+  });
+
+  it('renders the navbar links', () => {
+    render(<Navbar />);
+
+    screen.getByText(/Archive/i);
+
+    screen.getByText(/Mission/i);
+
+    screen.getByText(/Connect/i);
   });
 });

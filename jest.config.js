@@ -9,4 +9,6 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(@testing-library|some-other-library)/)',
   ],
+  testPathIgnorePatterns: ['<rootDir>/tests/'],
+  testMatch: ['<rootDir>/src/app/**/*.(test).tsx'],
 };
