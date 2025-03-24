@@ -17,9 +17,9 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Set BASE_URL
-        run: echo "BASE_URL=https://bcn-nine-lovat.vercel.app" >> $GITHUB_ENV
       - name: Run Playwright tests
+        env:
+          BASE_URL: ${{ github.event.deployment_status.environment_url }}
         run: npx playwright test
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
