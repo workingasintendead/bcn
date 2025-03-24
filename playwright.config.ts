@@ -10,7 +10,6 @@ export default defineConfig({
   reporter: 'html',
   use: {
     trace: 'on-first-retry',
-    baseURL: process.env.BASE_URL,
   },
 
   projects: [
