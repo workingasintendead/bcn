@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import Archive from './page';
 
 describe('Archive Page', () => {
-  it('renders the "Archive" text', () => {
+  it('renders the "Edgewater Landscaping" text', () => {
     render(<Archive />);
 
-    const ArchiveText = screen.getByText(/ARCHIVE PAGE/i);
-    expect(ArchiveText).toBeInTheDocument();
+    const text = screen.getByText(/Edgewater Landscaping/i);
+    expect(text).toBeInTheDocument();
   });
 
   it('renders the Navbar component', () => {
