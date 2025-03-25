@@ -25,12 +25,6 @@ jobs:
           BASE_URL=$(echo $response | jq -r '.deployments[0].url')
           echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
           echo "Preview URL is: $BASE_URL"
-      - name: Wait for Vercel deployment
-        run: |
-          while ! curl -s -I $BASE_URL | grep "HTTP/1.1 200 OK"; do
-            echo "Waiting for Vercel to deploy..."
-            sleep 10
-          done
       - name: Run Playwright tests
         run: npx playwright test --timeout=120000
       - uses: actions/upload-artifact@v4
