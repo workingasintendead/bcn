@@ -28,7 +28,7 @@ jobs:
           echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
           echo "Preview URL is: $BASE_URL"
       - name: Run Playwright tests
-        run: npx playwright test --timeout=30000 --base-url=$BASE_URL
+        run: npx playwright test --timeout=30000
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
