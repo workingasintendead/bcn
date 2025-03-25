@@ -11,8 +11,9 @@ export default defineConfig({
   use: {
     trace: 'on-first-retry',
     extraHTTPHeaders: {
-      'x-vercel-protection-bypass':
-        process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '',
+      'x-vercel-protection-bypass': 'twbByKjVcAtefFh5BMm8XHFBsGI9btWZ',
+      // 'x-vercel-protection-bypass':
+      //   process.env.VERCEL_AUTOMATION_BYPASS_SECRET || '',
       'x-vercel-set-bypass-cookie': 'true',
     },
   },
