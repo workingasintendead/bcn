@@ -17,6 +17,9 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Set up environment variables for Playwright
+        run: |
+          echo "VERCEL_AUTOMATION_BYPASS_SECRET=${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" >> $GITHUB_ENV
       - name: Get Vercel Preview URL
         id: get_preview_url
         run: |
