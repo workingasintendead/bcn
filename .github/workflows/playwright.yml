@@ -21,6 +21,7 @@ jobs:
         run: |
           if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
             echo "BASE_URL=https://$GITHUB_REPOSITORY-$GITHUB_SHA.vercel.app" >> $GITHUB_ENV
+          fi
       - name: Wait for Vercel deployment
         run: |
           while ! curl -s -I $BASE_URL | grep "HTTP/1.1 200 OK"; do
