@@ -20,13 +20,15 @@ jobs:
       - name: Set Vercel Preview URL as BASE_URL
         run: |
           if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
-            echo "BASE_URL=https://$GITHUB_REPOSITORY-$GITHUB_SHA.vercel.app" >> $GITHUB_ENV
+            PREVIEW_URL="https://${GITHUB_REPOSITORY#*/}-git-${GITHUB_REF_NAME#refs/heads/}-${GITHUB_SHA:0:7}.vercel.app"
+            echo "BASE_URL=$PREVIEW_URL" >> $GITHUB_ENV
+            echo "Preview URL set to: $PREVIEW_URL"
           fi
       - name: Wait for Vercel deployment
         run: |
           while ! curl -s -I $BASE_URL | grep "HTTP/1.1 200 OK"; do
             echo "Waiting for Vercel to deploy..."
-            sleep 30
+            sleep 10
           done
       - name: Run Playwright tests
         run: npx playwright test
