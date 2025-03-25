@@ -27,9 +27,9 @@ jobs:
           BASE_URL=$(echo $response | jq -r '.deployments[0].url')
           BASE_URL="https://$BASE_URL"
           echo "BASE_URL=$BASE_URL" >> $GITHUB_ENV
-          echo "Preview URL is: $BASE_URL"
+          echo "Preview URL is: $BASE_URL Secret code is: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}"
       - name: Run Playwright tests
-        run: npx playwright test --timeout=120000
+        run: npx playwright test --timeout=60000
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
