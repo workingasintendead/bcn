@@ -20,16 +20,14 @@ jobs:
       - name: Set Vercel Preview URL as BASE_URL
         run: |
           if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
-            PREVIEW_URL="https://${GITHUB_REPOSITORY#*/}-git-${GITHUB_REF_NAME#refs/heads/}-${GITHUB_SHA:0:7}.vercel.app"
-            echo "BASE_URL=$PREVIEW_URL" >> $GITHUB_ENV
-            echo "Preview URL set to: $PREVIEW_URL"
+            BRANCH_NAME=${GITHUB_HEAD_REF}
+          elif [[ $GITHUB_EVENT_NAME == 'push' ]]; then
+            BRANCH_NAME=${GITHUB_REF_NAME}
           fi
-      - name: Wait for Vercel deployment
-        run: |
-          while ! curl -s -I $BASE_URL | grep "HTTP/1.1 200 OK"; do
-            echo "Waiting for Vercel to deploy..."
-            sleep 10
-          done
+
+          PREVIEW_URL="https://bcn-git-${BRANCH_NAME}-bcns-projects.vercel.app"
+                    echo "BASE_URL=$PREVIEW_URL" >> $GITHUB_ENV
+          echo "Preview URL set to: $PREVIEW_URL"
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v4
