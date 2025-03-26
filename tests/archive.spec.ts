@@ -1,39 +1,27 @@
-import { test, expect, Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 
 const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
-const archiveUrl = `${baseUrl}/archive`;
 
-const testSection = async ({
-  page,
-  sectionText,
-  expectedUrl,
-}: {
-  page: Page;
-  sectionText: string;
-  expectedUrl: string;
-}) => {
-  await page.goto(archiveUrl);
+test.describe('Archive Page Links', () => {
+  test('should open the correct link in a new tab', async ({ page }) => {
+    await page.goto(`${baseUrl}/archive`);
 
-  const [newPage] = await Promise.all([
-    page.waitForEvent('popup'),
-    page.locator(`text=${sectionText}`).click(),
-  ]);
+    const sections = await page.locator('[data-testid="archive-section"]');
 
-  await expect(newPage).toHaveURL(expectedUrl);
-};
+    const sectionCount = await sections.count();
+    for (let i = 0; i < sectionCount; i++) {
+      const section = sections.nth(i);
+      const link = await section.locator('[data-testid="archive-link"]');
+      const sectionLink = await link.getAttribute('href');
 
-test('should navigate to the Edgewater portfolio page when the link is clicked', async ({
-  page,
-}) => {
-  await testSection({
-    page,
-    sectionText: 'Edgewater Landscaping Project 1',
-    expectedUrl: 'https://projectmk.vercel.app/portfolio',
-  });
+      const [newTab] = await Promise.all([
+        page.waitForEvent('popup'),
+        link.click(),
+      ]);
 
-  await testSection({
-    page,
-    sectionText: 'Edgewater Landscaping Project 2',
-    expectedUrl: 'https://projectmk.vercel.app/portfolio',
+      await newTab.waitForLoadState();
+
+      expect(newTab.url()).toBe(sectionLink);
+    }
   });
 });

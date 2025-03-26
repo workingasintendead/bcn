@@ -23,6 +23,7 @@ const ArchiveScroll: React.FC<SectionProps> = ({
 
   return (
     <div
+      data-testid="archive-section"
       className={`min-h-[calc(100vh-4rem)] snap-start flex justify-center items-center ${bgColor}`}
     >
       <div
@@ -38,7 +39,10 @@ const ArchiveScroll: React.FC<SectionProps> = ({
           />
         </div>
         <Link href={link} target="_blank">
-          <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center rounded-sm">
+          <div
+            data-testid="archive-link"
+            className="absolute top-0 left-0 w-full h-full flex justify-center items-center rounded-sm"
+          >
             <p
               className={`text-${textColor} text-xl md:text-3xl font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-2000 text-shadow`}
             >
