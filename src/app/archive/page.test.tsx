@@ -41,9 +41,8 @@ describe('Archive Page', () => {
 
   it('renders sections after data is fetched', async () => {
     render(<Archive />);
-    await waitFor(() => {
-      const sections = screen.getAllByText(/project/i);
-      expect(sections.length).toBeGreaterThan(0);
-    });
+
+    const sections = await screen.findAllByText(/project/i);
+    expect(sections.length).toBeGreaterThan(0);
   });
 });

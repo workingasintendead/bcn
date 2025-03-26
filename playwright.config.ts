@@ -41,5 +41,5 @@ export default defineConfig({
     // },
   ],
 
-  testMatch: ['**/*.spec.ts'],
+  testMatch: ['**/*.spec.ts', '**/*.test.ts'],
 });
