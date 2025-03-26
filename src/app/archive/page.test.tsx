@@ -2,13 +2,6 @@ import { render, screen } from '@testing-library/react';
 import Archive from './page';
 
 describe('Archive Page', () => {
-  it('renders the "Edgewater Landscaping" text', () => {
-    render(<Archive />);
-
-    const text = screen.getByText(/Edgewater Landscaping/i);
-    expect(text).toBeInTheDocument();
-  });
-
   it('renders the Navbar component', () => {
     render(<Archive />);
 
@@ -17,5 +10,13 @@ describe('Archive Page', () => {
 
     const archiveLink = screen.getByText(/Connect/i);
     expect(archiveLink).toBeInTheDocument();
+  });
+
+  it('renders at least one section with "project" text', () => {
+    render(<Archive />);
+
+    const sections = screen.getAllByText(/project/i);
+
+    expect(sections.length).toBeGreaterThan(0);
   });
 });

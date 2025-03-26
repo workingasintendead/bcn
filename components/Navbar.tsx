@@ -3,8 +3,8 @@ import Image from 'next/image';
 
 const Navbar = () => {
   return (
-    <nav className="shadow-md h-16">
-      <div className="container mx-auto flex justify-between items-center max-w-[900px] px-4">
+    <nav className="shadow-md sticky top-0 z-50 bg-black py-3">
+      <div className="container mx-auto flex justify-between items-center max-w-[900px] px-4 h-16 relative">
         <Link href="/gateway">
           <Image
             src="/bcnPHlogo.png"
