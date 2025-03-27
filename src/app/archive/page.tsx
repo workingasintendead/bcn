@@ -1,52 +1,65 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
 import Navbar from '../../../components/Navbar';
 import ArchiveScroll from '../../../components/Archive';
+import { edgeConfigStore, Section } from '../../stores/edge-config-store';
 
-interface Section {
-  imageSrc: string;
-  bgColor: string;
-  textColor: string;
-  text: string;
-  link: string;
-}
+const Archive: React.FC = observer(() => {
+  const { configData, isLoading, error } = edgeConfigStore;
 
-const Archive: React.FC = () => {
-  const [sections, setSections] = useState<Section[]>([]);
+  if (isLoading) {
+    return (
+      <>
+        <Navbar />
+        <div className="flex items-center justify-center h-screen text-xl font-bold">
+          &gt;&gt; LOADING &lt;&lt;
+        </div>
+      </>
+    );
+  }
 
-  useEffect(() => {
-    const fetchSections = async () => {
-      try {
-        const res = await fetch('/api/edge-config');
-        const data = await res.json();
-        setSections(data);
-      } catch {
-        setSections([]);
-      }
-    };
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <div className="flex items-center justify-center h-screen text-xl font-bold">
+          &gt;&gt; Error loading configuration. Please try again later. &lt;&lt;
+        </div>
+      </>
+    );
+  }
 
-    fetchSections();
-  }, []);
+  const sections = configData?.sections;
+
+  if (!sections || sections.length === 0) {
+    return (
+      <>
+        <Navbar />
+        <div className="flex items-center justify-center h-screen text-xl font-bold">
+          &gt;&gt; No sections available. &lt;&lt;
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
       <Navbar />
       <div className="scroll-container h-[calc(100vh-4rem)] snap-y snap-mandatory py-4 pt-20">
-        {sections.length > 0 &&
-          sections.map((section, index) => (
-            <ArchiveScroll
-              key={index}
-              imageSrc={section.imageSrc}
-              bgColor={section.bgColor}
-              textColor={section.textColor}
-              text={section.text}
-              link={section.link}
-            />
-          ))}
+        {sections.map((section: Section, index: number) => (
+          <ArchiveScroll
+            key={index}
+            imageSrc={section.imageSrc}
+            bgColor={section.bgColor}
+            textColor={section.textColor}
+            text={section.text}
+            link={section.link}
+          />
+        ))}
       </div>
     </>
   );
-};
+});
 
 export default Archive;

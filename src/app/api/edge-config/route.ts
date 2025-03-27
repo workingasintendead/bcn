@@ -3,6 +3,6 @@ import { get } from '@vercel/edge-config';
 
 export async function GET() {
   const sectionsData = await get('sections');
-
-  return NextResponse.json(sectionsData);
+  const responseData = { sections: sectionsData };
+  return NextResponse.json(responseData);
 }
