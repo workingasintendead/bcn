@@ -1,13 +1,6 @@
 import { NextResponse } from 'next/server';
 import { get } from '@vercel/edge-config';
-
-type Section = {
-  imageSrc: string;
-  bgColor: string;
-  textColor: string;
-  text: string;
-  link: string;
-};
+import { Section } from '../../../stores/edge-config-store';
 
 type SiteData = {
   sections?: Section[];
